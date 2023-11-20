@@ -42,18 +42,17 @@ app.get('/login', function(req, res){
 });
 
 app.post('/login', function(req, res){
-    for (const account in userAccount){
-        if (userAccount[account]["name"] == req.body.username && userAccount[account]["password"] == req.body.password) {
-        req.session.authenticated = true;
-        req.session.userid = userAccount[account]["name"];
-        console.log(req.session.userid);
-        return res.status(200).redirect("/home");
-        }
-        else {
-            console.log("Error username or password.");
-            return res.redirect("/");
+    console.log("...Handling your login request");
+    for (var i=0; i<usersinfo.length; i++){
+        if (usersinfo[i].name == req.body.username && usersinfo[i].password == req.body.password) {
+            req.session.authenticated = true;
+            req.session.userid = usersinfo[i].name;
+            console.log(req.session.userid);
+            return res.status(200).redirect("/home");
         }
     }
+        console.log("Error username or password.");
+        return res.redirect("/");
 });
 
 app.get('/logout', function(req, res){
